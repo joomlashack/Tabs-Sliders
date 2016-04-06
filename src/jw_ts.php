@@ -1,10 +1,12 @@
 <?php
 /**
- * @version		3.0.0
- * @package		Tabs & Sliders (plugin)
- * @author    	JoomlaWorks - http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2015 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @package	   Tabs & Sliders
+ * @contact    www.alledia.com, hello@alledia.com
+ * @author     JoomlaWorks - http://www.joomlaworks.net
+ * @author     Alledia - http://www.alledia.com
+ * @copyright  Copyright (c) 2006 - 2015 JoomlaWorks Ltd. All rights reserved.
+ * @copyright  2016 Open Source Training, LLC. All rights reserved
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
