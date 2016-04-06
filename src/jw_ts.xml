@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="content" method="upgrade">
+	<name>Tabs &amp; Sliders [for articles] (by JoomlaWorks)</name>
+	<author>JoomlaWorks</author>
+	<authorEmail>please-use-the-contact-form@joomlaworks.net</authorEmail>
+	<authorUrl>http://www.joomlaworks.net</authorUrl>
+	<copyright>Copyright (c) 2006 - 2015 JoomlaWorks Ltd. All rights reserved.</copyright>
+	<creationDate>January 18th, 2015</creationDate>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<version>3.0.0</version>
+	<description>JW_PLG_TS_XML_DESC</description>
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/plugins/content/jw_ts/jw_ts/includes/elements">
+				<field name="" type="header" default="JW_PLG_TS_PARAMETERS" label="" description="" />
+				<field name="template" type="template" default="Default" label="JW_PLG_TS_CHOOSE_LAYOUT_TEMPLATE" description="JW_PLG_TS_CHOOSE_LAYOUT_TEMPLATE_DESC" />
+				<field name="tabContentHeight" type="text" default="" size="6" label="JW_PLG_TS_TAB_CONTENT_HEIGHT" description="JW_PLG_TS_TAB_CONTENT_HEIGHT_DESC" />
+			</fieldset>
+		</fields>
+	</config>
+	<files>
+		<filename plugin="jw_ts">jw_ts.php</filename>
+		<folder>jw_ts</folder>
+	</files>
+	<media folder="media" destination="jw_ts">
+		<filename>TabsAndSlidersForArticles_300x91_8.png</filename>
+	</media>
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.plg_content_jw_ts.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_content_jw_ts.sys.ini</language>
+	</languages>
+	<updateservers>
+		<server type="extension" priority="1" name="Tabs &amp; Sliders [for articles]">http://www.joomlaworks.net/updates/jw_ts_plugin.xml</server>
+	</updateservers>
+</extension>
