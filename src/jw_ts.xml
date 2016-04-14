@@ -80,6 +80,7 @@
             </fieldset>
         </fields>
     </config>
+
     <updateservers>
         <server type="extension" priority="1" name="Tabs &amp; Sliders [for articles]"><![CDATA[http://deploy.ostraining.com/client/update/free/stable/plg_content_jw_ts]]></server>
     </updateservers>
