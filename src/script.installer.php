@@ -13,13 +13,12 @@ defined('_JEXEC') or die();
 
 require_once 'library/Installer/include.php';
 
-use Alledia\Installer\AbstractScript;
-use Alledia\Framework\Factory;
+use Alledia\Installer;
 
 /**
  * Custom installer script
  */
-class PlgContentJW_TSInstallerScript extends AbstractScript
+class PlgContentJW_TSInstallerScript extends Installer\AbstractScript
 {
 
 }
