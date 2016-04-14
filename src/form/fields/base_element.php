@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	Tabs & Sliders [for articles]
+ * @package    Tabs & Sliders [for articles]
  * @contact    www.alledia.com, hello@alledia.com
  * @author     JoomlaWorks - http://www.joomlaworks.net
  * @author     Alledia - http://www.alledia.com
