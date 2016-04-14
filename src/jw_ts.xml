@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.4" type="plugin" group="content" method="upgrade">
-	<name>JW_PLG_TS_XML_TITLE</name>
-	<author>Alledia</author>
-	<authorEmail>support@alledia.com</authorEmail>
-	<authorUrl>http://www.alledia.com</authorUrl>
-	<copyright>Copyright (C) 2016 Open Source Training, LLC. All rights reserved. / Copyright (c) 2006 - 2015 JoomlaWorks Ltd. All rights reserved.</copyright>
-	<creationDate>April 6, 2016</creationDate>
-	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<version>4.0.0</version>
-	<description>JW_PLG_TS_XML_DESC</description>
+    <name>JW_PLG_TS_XML_TITLE</name>
+    <author>Alledia</author>
+    <authorEmail>support@alledia.com</authorEmail>
+    <authorUrl>http://www.alledia.com</authorUrl>
+    <copyright>Copyright (C) 2016 Open Source Training, LLC. All rights reserved. / Copyright (c) 2006 - 2015 JoomlaWorks Ltd. All rights reserved.</copyright>
+    <creationDate>April 6, 2016</creationDate>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <version>4.0.0</version>
+    <description>JW_PLG_TS_XML_DESC</description>
 
     <alledia>
         <element publish="true">jw_ts</element>
@@ -36,17 +36,17 @@
     <scriptfile>script.installer.php</scriptfile>
 
     <files>
-		<filename plugin="jw_ts">jw_ts.php</filename>
+        <filename plugin="jw_ts">jw_ts.php</filename>
         <folder>jw_ts</folder>
         <folder>form</folder>
         <folder>library</folder>
-		<folder>views</folder>
-	</files>
+        <folder>views</folder>
+    </files>
 
     <languages>
-		<language tag="en-GB">language/en-GB/en-GB.plg_content_jw_ts.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.plg_content_jw_ts.sys.ini</language>
-	</languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_content_jw_ts.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_content_jw_ts.sys.ini</language>
+    </languages>
 
     <media destination="plg_content_jw_ts" folder="media">
         <folder>css</folder>
@@ -80,7 +80,7 @@
             </fieldset>
         </fields>
     </config>
-	<updateservers>
-		<server type="extension" priority="1" name="Tabs &amp; Sliders [for articles]"><![CDATA[http://deploy.ostraining.com/client/update/free/stable/plg_content_jw_ts]]></server>
-	</updateservers>
+    <updateservers>
+        <server type="extension" priority="1" name="Tabs &amp; Sliders [for articles]"><![CDATA[http://deploy.ostraining.com/client/update/free/stable/plg_content_jw_ts]]></server>
+    </updateservers>
 </extension>
