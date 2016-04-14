@@ -13,7 +13,7 @@
     <alledia>
         <element publish="true">jw_ts</element>
         <namespace>JW_TS</namespace>
-        <name><![CDATA[Tabs &amp; Sliders]]></name>
+        <name><![CDATA[Tabs &amp; Sliders [for articles]]]></name>
         <license>free</license>
 
         <relatedExtensions>
