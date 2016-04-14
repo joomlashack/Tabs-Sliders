@@ -5,7 +5,7 @@
  * @author     JoomlaWorks - http://www.joomlaworks.net
  * @author     Alledia - http://www.alledia.com
  * @copyright  Copyright (c) 2006 - 2015 JoomlaWorks Ltd. All rights reserved.
- * @copyright  2016 Open Source Training, LLC. All rights reserved
+ * @copyright  Copyright (c) 2016 Open Source Training, LLC. All rights reserved
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
