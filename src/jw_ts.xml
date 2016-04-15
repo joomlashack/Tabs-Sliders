@@ -13,7 +13,7 @@
     <alledia>
         <element publish="true">jw_ts</element>
         <namespace>JW_TS</namespace>
-        <name><![CDATA[Tabs &amp; Sliders [for articles]]]></name>
+        <name><![CDATA[Tabs &amp; Sliders]]></name>
         <license>free</license>
 
         <relatedExtensions>
@@ -27,6 +27,10 @@
                 element="ossystem"
                 publish="true"
                 ordering="first">OSSystem</extension>
+
+           	<extension
+                type="module"
+                element="mod_jw_ts">Tabs-Sliders-module</extension>
 
         </relatedExtensions>
 
@@ -82,6 +86,6 @@
     </config>
 
     <updateservers>
-        <server type="extension" priority="1" name="Tabs &amp; Sliders [for articles]"><![CDATA[http://deploy.ostraining.com/client/update/free/stable/plg_content_jw_ts]]></server>
+        <server type="extension" priority="1" name="Tabs &amp; Sliders"><![CDATA[http://deploy.ostraining.com/client/update/free/stable/plg_content_jw_ts]]></server>
     </updateservers>
 </extension>

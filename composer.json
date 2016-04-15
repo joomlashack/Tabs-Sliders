@@ -1,13 +1,13 @@
 {
     "name"             : "alledia/tabs-and-sliders-for-articles",
-    "description"      : "Tabs & Sliders [for articles]",
+    "description"      : "Tabs & Sliders",
     "minimum-stability": "stable",
     "license"          : "GPL-2+",
     "type"             : "joomla.plugin",
     "extra"            : {
         "element"        : "plg_content_jw_ts",
         "element-short"  : "jw_ts",
-        "name"           : "Tabs & Sliders [for articles]",
+        "name"           : "Tabs & Sliders",
         "folder"         : "content",
         "client"         : "site",
         "package-license": "free"
