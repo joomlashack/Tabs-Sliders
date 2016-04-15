@@ -17,8 +17,8 @@ class plgContentJw_ts extends JPlugin
 
     // JoomlaWorks reference parameters
     public $plg_name               = "jw_ts";
-    public $plg_copyrights_start   = "\n\n<!-- JoomlaWorks \"Tabs & Sliders\" Plugin (v3.0.0) starts here -->\n";
-    public $plg_copyrights_end     = "\n<!-- JoomlaWorks \"Tabs & Sliders\" Plugin (v3.0.0) ends here -->\n\n";
+    public $plg_copyrights_start   = "\n\n<!-- \"Tabs & Sliders\" Plugin starts here -->\n";
+    public $plg_copyrights_end     = "\n<!-- \"Tabs & Sliders\" Plugin ends here -->\n\n";
 
     // Load the plugin language file
     protected $autoloadLanguage = true;
