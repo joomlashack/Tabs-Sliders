@@ -148,14 +148,14 @@ class plgContentJw_ts extends JPlugin
         ob_end_clean();
 
         // Cleanup inbetween markup
-        if (preg_match_all("#{/slide}(.+?) {slide=#s", $row->text, $matches, PREG_PATTERN_ORDER) > 0) {
+        if (preg_match_all("#{/slide}(.+?){slide=#s", $row->text, $matches, PREG_PATTERN_ORDER) > 0) {
             foreach ($matches[1] as $match) {
                 if (strlen($match)<20) {
                     $row->text = str_replace($match, '', $row->text);
                 }
             }
         }
-        if (preg_match_all("#{/slider}(.+?) {slider=#s", $row->text, $matches, PREG_PATTERN_ORDER) > 0) {
+        if (preg_match_all("#{/slider}(.+?){slider=#s", $row->text, $matches, PREG_PATTERN_ORDER) > 0) {
             foreach ($matches[1] as $match) {
                 if (strlen($match)<20) {
                     $row->text = str_replace($match, '', $row->text);
@@ -164,8 +164,8 @@ class plgContentJw_ts extends JPlugin
         }
 
         // Do the replacement
-        $oldRegex = "#{slide=(.+?)}(.+?) {/slide}#s";
-        $newRegex = "#{slider=(.+?)}(.+?) {/slider}#s";
+        $oldRegex = "#{slide=(.+?)}(.+?){/slide}#s";
+        $newRegex = "#{slider=(.+?)}(.+?){/slider}#s";
 
         if ($document->getType()=='html' && !$app->input->getCmd('print')) {
             if (preg_match("#{slide=.+?}#s", $row->text)) {
