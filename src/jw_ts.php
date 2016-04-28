@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Tabs & Sliders [for articles]
+ * @package    Tabs and Sliders [for articles]
  * @contact    www.alledia.com, hello@alledia.com
  * @author     JoomlaWorks - http://www.joomlaworks.net
  * @author     Alledia - http://www.alledia.com
@@ -17,8 +17,8 @@ class plgContentJw_ts extends JPlugin
 
     // JoomlaWorks reference parameters
     public $plg_name               = "jw_ts";
-    public $plg_copyrights_start   = "\n\n<!-- \"Tabs & Sliders\" Plugin starts here -->\n";
-    public $plg_copyrights_end     = "\n<!-- \"Tabs & Sliders\" Plugin ends here -->\n\n";
+    public $plg_copyrights_start   = "\n\n<!-- \"Tabs and Sliders\" Plugin starts here -->\n";
+    public $plg_copyrights_end     = "\n<!-- \"Tabs and Sliders\" Plugin ends here -->\n\n";
 
     // Load the plugin language file
     protected $autoloadLanguage = true;
