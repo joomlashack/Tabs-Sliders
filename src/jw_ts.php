@@ -147,39 +147,21 @@ class plgContentJw_ts extends JPlugin
         $getSlidersTemplate = $this->plg_copyrights_start.ob_get_contents().$this->plg_copyrights_end;
         ob_end_clean();
 
-        // Cleanup inbetween markup
-        if (preg_match_all("#{/slide}(.+?){slide=#s", $row->text, $matches, PREG_PATTERN_ORDER) > 0) {
-            foreach ($matches[1] as $match) {
-                if (strlen($match)<20) {
-                    $row->text = str_replace($match, '', $row->text);
-                }
-            }
-        }
-        if (preg_match_all("#{/slider}(.+?){slider=#s", $row->text, $matches, PREG_PATTERN_ORDER) > 0) {
-            foreach ($matches[1] as $match) {
-                if (strlen($match)<20) {
-                    $row->text = str_replace($match, '', $row->text);
-                }
-            }
-        }
-
-        // Do the replacement
-        $oldRegex = "#{slide=(.+?)}(.+?){/slide}#s";
-        $newRegex = "#{slider=(.+?)}(.+?){/slider}#s";
-
-        if ($document->getType()=='html' && !$app->input->getCmd('print')) {
-            if (preg_match("#{slide=.+?}#s", $row->text)) {
-                $row->text = preg_replace($oldRegex, str_replace(array("{SLIDER_TITLE}", "{SLIDER_CONTENT}"), array("$1", "$2"), $getSlidersTemplate), $row->text);
-            }
-            if (preg_match("#{slider=.+?}#s", $row->text)) {
-                $row->text = preg_replace($newRegex, str_replace(array("{SLIDER_TITLE}", "{SLIDER_CONTENT}"), array("$1", "$2"), $getSlidersTemplate), $row->text);
-            }
-        } else {
-            if (preg_match("#{slide=.+?}#s", $row->text)) {
-                $row->text = preg_replace($oldRegex, "<h3>$1</h3>$2", $row->text);
-            }
-            if (preg_match("#{slider=.+?}#s", $row->text)) {
-                $row->text = preg_replace($newRegex, "<h3>$1</h3>$2", $row->text);
+        // Do the replacement if needed
+        if (substr_count($row->text, '{slide') > 0) {
+            $regex = "#(?:<p>)?\{slide[r]?=([^}]+)\}(?:</p>)?(.*?)(?:<p>)?\{/slide[r]?\}(?:</p>)?#s";
+            if ($document->getType() === 'html' && !$app->input->getCmd('print')) {
+                $row->text = preg_replace(
+                    $regex,
+                    str_replace(
+                        array("{SLIDER_TITLE}", "{SLIDER_CONTENT}"),
+                        array("$1", "$2"),
+                        $getSlidersTemplate
+                    ),
+                    $row->text
+                );
+            } else {
+                $row->text = preg_replace($regex, "<h3>$1</h3>$2", $row->text);
             }
         }
     }
