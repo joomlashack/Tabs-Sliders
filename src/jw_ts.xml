@@ -10,6 +10,8 @@
     <version>4.0.2</version>
     <description>JW_PLG_TS_XML_DESC</description>
 
+    <variant>FREE</variant>
+
     <alledia>
         <element publish="true">jw_ts</element>
         <namespace>JW_TS</namespace>
