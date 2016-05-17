@@ -8,32 +8,8 @@
     <creationDate>May 12, 2016</creationDate>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <version>4.0.2</version>
-    <description>JW_PLG_TS_XML_DESC</description>
-
     <variant>FREE</variant>
-
-    <alledia>
-        <element publish="true">jw_ts</element>
-        <namespace>JW_TS</namespace>
-        <name><![CDATA[Tabs and Sliders [for articles]]]></name>
-        <license>free</license>
-
-        <relatedExtensions>
-            <extension
-                type="library"
-                element="allediaframework">AllediaFramework</extension>
-
-            <extension
-                type="plugin"
-                group="system"
-                element="ossystem"
-                publish="true"
-                ordering="first">OSSystem</extension>
-
-        </relatedExtensions>
-
-        <include>AllediaFreeDefaultFiles</include>
-    </alledia>
+    <description>JW_PLG_TS_XML_DESC</description>
 
     <scriptfile>script.installer.php</scriptfile>
 
@@ -86,4 +62,27 @@
     <updateservers>
         <server type="extension" priority="1" name="Tabs and Sliders [for articles]"><![CDATA[http://deploy.ostraining.com/client/update/free/stable/plg_content_jw_ts]]></server>
     </updateservers>
+
+    <alledia>
+        <element publish="true">jw_ts</element>
+        <namespace>JW_TS</namespace>
+        <name><![CDATA[Tabs and Sliders [for articles]]]></name>
+        <license>free</license>
+
+        <relatedExtensions>
+            <extension
+                type="library"
+                element="allediaframework">AllediaFramework</extension>
+
+            <extension
+                type="plugin"
+                group="system"
+                element="ossystem"
+                publish="true"
+                ordering="first">OSSystem</extension>
+
+        </relatedExtensions>
+
+        <include>AllediaFreeDefaultFiles</include>
+    </alledia>
 </extension>
