@@ -1,5 +1,8 @@
-builder.path=/path/to/AllediaBuilder/local/copy
+builder.path=/path/to/AllediaBuilder
 
 project.AllediaFramework.path=/path/to/AllediaFramework
 project.AllediaInstaller.path=/path/to/AllediaInstaller
 project.AllediaFreeDefaultFiles.path=/path/to/AllediaFreeDefaultFiles
+project.OSSystem.path=/path/to/OSSystem
+project.OSMyLicensesManager.path=/path/to/OSMyLicensesManager
+project.Tabs-Sliders-module.path=/path/to/Tabs-Sliders-module
