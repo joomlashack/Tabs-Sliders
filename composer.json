@@ -1,5 +1,5 @@
 {
-    "name"             : "alledia/tabs-and-sliders-for-articles",
+    "name"             : "joomlashack/tabs-and-sliders-for-articles",
     "description"      : "Tabs and Sliders [for articles]",
     "minimum-stability": "stable",
     "license"          : "GPL-2+",
@@ -15,8 +15,8 @@
     },
     "authors"          : [
         {
-            "name" : "Alledia",
-            "email": "support@alledia.com"
+            "name" : "Joomlashack",
+            "email": "help@joomlashack.com"
         },
         {
             "name" : "JoomlaWorks",
