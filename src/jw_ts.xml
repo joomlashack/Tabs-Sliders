@@ -54,7 +54,7 @@
                     type="customfooter"
                     media="plg_content_jw_ts"
                     showgoproad="1"
-                    jedurl="http://extensions.joomla.org/extensions/extension/news-display/article-elements/tabs-sliders-for-articles" />
+                    jedurl="https://extensions.joomla.org/extension/tabs-and-sliders" />
             </fieldset>
         </fields>
     </config>
