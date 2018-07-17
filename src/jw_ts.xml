@@ -49,12 +49,11 @@
                     label="JW_PLG_TS_TAB_CONTENT_HEIGHT"
                     description="JW_PLG_TS_TAB_CONTENT_HEIGHT_DESC" />
 
-                <field
-                    name="customfooter"
+                <field name="customfooter"
                     type="customfooter"
                     media="plg_content_jw_ts"
-                    showgoproad="1"
-                    jedurl="https://extensions.joomla.org/extension/tabs-and-sliders" />
+                    showgoproad="https://www.joomlashack.com/joomla-extensions/tabs-and-sliders/"
+                    jedurl="https://extensions.joomla.org/extension/tabs-and-sliders/" />
             </fieldset>
         </fields>
     </config>
