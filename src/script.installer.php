@@ -29,9 +29,6 @@ require_once 'library/Installer/include.php';
 
 use Alledia\Installer;
 
-/**
- * Custom installer script
- */
 class PlgContentJW_TSInstallerScript extends Installer\AbstractScript
 {
 
