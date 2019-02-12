@@ -17,13 +17,9 @@
         {
             "name" : "Joomlashack",
             "email": "help@joomlashack.com"
-        },
-        {
-            "name" : "JoomlaWorks",
-            "site": "www.joomlaworks.net"
         }
     ],
     "require"          : {
-        "php"           : ">= 5.3"
+        "php": ">= 5.6"
     }
 }
