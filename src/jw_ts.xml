@@ -49,6 +49,16 @@
                     label="JW_PLG_TS_TAB_CONTENT_HEIGHT"
                     description="JW_PLG_TS_TAB_CONTENT_HEIGHT_DESC" />
 
+                <field name="sliderAutoScroll"
+                       type="radio"
+                       default="0"
+                       class="btn-group btn-group-yesno"
+                       label="JW_PLG_TS_SLIDER_AUTO_SCROLL"
+                       description="JW_PLG_TS_SLIDER_AUTO_SCROLL_DESC">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                    </field>
+
                 <field name="customfooter"
                     type="customfooter"
                     media="plg_content_jw_ts"
