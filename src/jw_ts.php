@@ -64,6 +64,7 @@ class plgContentJw_ts extends JPlugin
         // Get plugin parameters
         $template         = $this->params->get('template', 'Default');
         $tabContentHeight = $this->params->get('tabContentHeight', 0);
+        $sliderAutoScroll = $this->params->get('sliderAutoScroll', 0);
 
 
 
@@ -90,6 +91,8 @@ class plgContentJw_ts extends JPlugin
             // JS
             JHtml::_('jquery.framework');
             $document->addScript($pluginLivePath.'/includes/js/behaviour.min.js');
+            
+            $document->addScriptDeclaration('var jsts_sliderAutoScroll = ' . $sliderAutoScroll . ';');
 
             // CSS
             $document->addStyleSheet($pluginTemplateFolderURL.'/css/template.css');

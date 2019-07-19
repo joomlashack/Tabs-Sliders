@@ -331,6 +331,12 @@ if (typeof tabberOptions == 'undefined') {
                 $(this).addClass('jwts_toggleOn');
             }
 
+            if(jsts_sliderAutoScroll) {
+                $('html, body').animate({
+                    scrollTop: $(this).offset().top
+                }, 500);
+            }
+
             return false;
         });
     });
