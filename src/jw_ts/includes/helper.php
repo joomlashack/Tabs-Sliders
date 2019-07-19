@@ -23,10 +23,19 @@
  * along with Tabs and Sliders.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Joomla\Registry\Registry;
+
 defined('_JEXEC') or die();
 
 class JWTSHelper
 {
+    /**
+     * @param string $pluginName
+     * @param string $pluginTemplate
+     *
+     * @return Registry
+     * @throws Exception
+     */
     public function getTemplatePath($pluginName, $pluginTemplate)
     {
         $app         = JFactory::getApplication();
@@ -53,13 +62,13 @@ class JWTSHelper
                 $pluginTemplate
             );
 
-            $properties   = array(
+            $properties = array(
                 'folder' => JPATH_SITE . $pluginFolder,
                 'http'   => JUri::root() . $pluginFolder
             );
         }
 
-        $paths = new JObject($properties);
+        $paths = new Registry($properties);
 
         return $paths;
     }
