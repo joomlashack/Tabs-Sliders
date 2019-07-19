@@ -23,8 +23,7 @@
  * along with Tabs and Sliders.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die();
 
 jimport('joomla.form.formfield');
 

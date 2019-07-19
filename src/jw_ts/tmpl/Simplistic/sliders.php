@@ -23,8 +23,7 @@
  * along with Tabs and Sliders.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die();
 
 // Please note that this is the override for each slider only! Any change you do in the html below will reflect on all slider panes across your entire site articles.
 
