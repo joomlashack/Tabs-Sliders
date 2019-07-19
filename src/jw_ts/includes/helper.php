@@ -55,7 +55,7 @@ class JWTSHelper
 
             $properties   = array(
                 'folder' => JPATH_SITE . $pluginFolder,
-                'http'   => JUri::root(true) . $pluginFolder
+                'http'   => JUri::root() . $pluginFolder
             );
         }
 
