@@ -24,161 +24,193 @@
  */
 
 // no direct access
+use Joomla\Registry\Registry;
+
 defined('_JEXEC') or die('Restricted access');
 
 class plgContentJw_ts extends JPlugin
 {
+    public $plg_name             = "jw_ts";
+    public $plg_copyrights_start = "\n\n<!-- \"Tabs and Sliders\" Plugin starts here -->\n";
+    public $plg_copyrights_end   = "\n<!-- \"Tabs and Sliders\" Plugin ends here -->\n\n";
 
-    // JoomlaWorks reference parameters
-    public $plg_name               = "jw_ts";
-    public $plg_copyrights_start   = "\n\n<!-- \"Tabs and Sliders\" Plugin starts here -->\n";
-    public $plg_copyrights_end     = "\n<!-- \"Tabs and Sliders\" Plugin ends here -->\n\n";
-
-    // Load the plugin language file
     protected $autoloadLanguage = true;
 
+    /**
+     * @param string   $context
+     * @param object   $row
+     * @param Registry $params
+     * @param int      $page
+     *
+     * @return void
+     * @throws Exception
+     */
     public function onContentPrepare($context, &$row, &$params, $page = 0)
     {
-        // API
-        $app = JFactory::getApplication();
+        $app      = JFactory::getApplication();
         $document = JFactory::getDocument();
 
-        // Assign paths
-        $sitePath       = JPATH_SITE;
-        $siteUrl        = JURI::root(true);
-        $pluginLivePath = JURI::root(true) . '/plugins/content/' . $this->plg_name . '/' . $this->plg_name;
-
-        // Simple performance checks to determine whether plugin should process further
         if (!preg_match("#{tab=.+?}|{slide=.+?}|{slider=.+?}#s", $row->text)) {
             return;
         }
 
-        // Check if plugin is enabled
         if (JPluginHelper::isEnabled('content', $this->plg_name) == false) {
             return;
         }
 
-        // Includes
-        require_once(dirname(__FILE__).'/'.$this->plg_name.'/includes/helper.php');
+        require_once __DIR__ . '/' . $this->plg_name . '/includes/helper.php';
 
-        // Get plugin parameters
         $template         = $this->params->get('template', 'Default');
         $tabContentHeight = $this->params->get('tabContentHeight', 0);
         $sliderAutoScroll = $this->params->get('sliderAutoScroll', 0);
 
-
-
-        // ----------------------------------- Render the output -----------------------------------
-
+        /* ----------------------------------- Render the output ----------------------------------- */
         // Variable cleanups for K2
         if ($document->getType() != 'html') {
             $this->plg_copyrights_start = '';
             $this->plg_copyrights_end   = '';
         }
 
-        // Assign the helper class
-        $JWTSHelper = new JWTSHelper;
+        $helper              = new JWTSHelper;
+        $pluginTemplatePaths = $helper->getTemplatePath($this->plg_name, $template);
+        $documentType        = $document->getType();
 
-        // Get the current template layout folder
-        $pluginTemplateFolder = $JWTSHelper->getTemplatePath($this->plg_name, $template);
+        // html-only setups
+        if ($documentType == 'html') {
+            $pluginTemplateBaseUrl = $pluginTemplatePaths->get('http');
 
-        // Append head includes only when the document is in HTML mode
-        if ($document->getType() == 'html') {
-
-            // Select the right template layout folder
-            $pluginTemplateFolderURL = $pluginTemplateFolder->http;
-
-            // JS
             JHtml::_('jquery.framework');
-            $document->addScript($pluginLivePath.'/includes/js/behaviour.min.js');
-            
+            JHtml::_('script', sprintf('/plugins/content/%1$s/%1$s/includes/js/behaviour.min.js', $this->plg_name));
             $document->addScriptDeclaration('var jsts_sliderAutoScroll = ' . $sliderAutoScroll . ';');
 
-            // CSS
-            $document->addStyleSheet($pluginTemplateFolderURL.'/css/template.css');
+            JHtml::_('stylesheet', $pluginTemplateBaseUrl . '/css/template.css');
 
             if ($tabContentHeight) {
-                $document->addStyleDeclaration('.jwts_tabberlive .jwts_tabbertab {height:'.$tabContentHeight.'px!important;overflow:auto!important;}');
+                $document->addStyleDeclaration(
+                    sprintf(
+                        '.jwts_tabberlive .jwts_tabbertab {height: %spx!important;overflow:auto!important;}',
+                        $tabContentHeight
+                    )
+                );
             }
-
         }
 
         // --- Tabs ---
-        if ($document->getType()=='html') {
-            $b=1;
-            unset($tabs);
-            if (preg_match_all("/{tab=.+?}{tab=.+?}|{tab=.+?}|{\/tabs}/", $row->text, $matches, PREG_PATTERN_ORDER) > 0) {
+        if ($documentType == 'html') {
+            $b    = 1;
+            $tabs = array();
+
+            if (preg_match_all('/{tab=.+?}{tab=.+?}|{tab=.+?}|{\/tabs}/', $row->text, $matches)) {
                 foreach ($matches[0] as $match) {
-                    if ($b==1 && $match!="{/tabs}") {
+                    if ($b == 1 && $match != "{/tabs}") {
                         $tabs[] = 1;
-                        $b=2;
-                    } elseif ($match=="{/tabs}") {
-                        $tabs[]=3;
-                        $b=1;
+                        $b      = 2;
+
+                    } elseif ($match == "{/tabs}") {
+                        $tabs[] = 3;
+                        $b      = 1;
+
                     } elseif (preg_match("/{tab=.+?}{tab=.+?}/", $match)) {
-                        $tabs[]=2;
-                        $tabs[]=1;
-                        $b=2;
+                        $tabs[] = 2;
+                        $tabs[] = 1;
+                        $b      = 2;
+
                     } else {
-                        $tabs[]=2;
+                        $tabs[] = 2;
                     }
                 }
             }
-            @reset($tabs);
+
+            reset($tabs);
             $tabscount = 0;
-            if (preg_match_all("/{tab=.+?}|{\/tabs}/", $row->text, $matches, PREG_PATTERN_ORDER) > 0) {
-                $tabid=1;
+
+            if (preg_match_all('/{tab=.+?}|{\/tabs}/', $row->text, $matches)) {
+                $tabid = 1;
+
                 foreach ($matches[0] as $match) {
-                    if ($tabs[$tabscount]==1) {
-                        $match = str_replace("{tab=", "", $match);
-                        $match = str_replace("}", "", $match);
-                        $row->text = str_replace("{tab=".$match."}", $this->plg_copyrights_start.'<div class="jwts_tabber" id="jwts_tab'.$tabid.'"><div class="jwts_tabbertab" title="'.$match.'"><h2 class="jwts_heading"><a href="#" title="'.$match.'">'.$match.'</a></h2>', $row->text);
+                    if ($tabs[$tabscount] == 1) {
+                        $match     = str_replace('{tab=', '', $match);
+                        $match     = str_replace('}', '', $match);
+                        $row->text = str_replace(
+                            '{tab=' . $match . '}',
+                            sprintf(
+                                '%s<div class="jwts_tabber" id="jwts_tab%s"><div class="jwts_tabbertab" title="%3$s">'
+                                . '<h2 class="jwts_heading"><a href="#" title="%3$s">%3$ss</a></h2>',
+                                $this->plg_copyrights_start,
+                                $tabid,
+                                $match
+                            ),
+                            $row->text
+                        );
                         $tabid++;
-                    } elseif ($tabs[$tabscount]==2) {
-                        $match = str_replace("{tab=", "", $match);
-                        $match = str_replace("}", "", $match);
-                        $row->text = str_replace("{tab=".$match."}", '</div><div class="jwts_tabbertab" title="'.$match.'"><h2 class="jwts_heading"><a href="#" title="'.$match.'">'.$match.'</a></h2>', $row->text);
-                    } elseif ($tabs[$tabscount]==3) {
-                        $row->text = str_replace("{/tabs}", '</div></div><div class="jwts_clr"></div>'.$this->plg_copyrights_end, $row->text);
+
+                    } elseif ($tabs[$tabscount] == 2) {
+                        $match     = str_replace('{tab=', '', $match);
+                        $match     = str_replace('}', '', $match);
+                        $row->text = str_replace(
+                            '{tab=' . $match . '}',
+                            sprintf(
+                                '</div>'
+                                . '<div class="jwts_tabbertab" title="%1$s">'
+                                . '<h2 class="jwts_heading"><a href="#" title="%1$s">%1$ss</a></h2>',
+                                $match
+                            ),
+                            $row->text
+                        );
+
+                    } elseif ($tabs[$tabscount] == 3) {
+                        $row->text = str_replace(
+                            '{/tabs}',
+                            sprintf(
+                                '</div></div><div class="jwts_clr"></div>%s',
+                                $this->plg_copyrights_end
+                            ),
+                            $row->text
+                        );
                     }
+
                     $tabscount++;
                 }
             }
+
         } else {
-            if (preg_match_all("/{tab=.+?}/", $row->text, $matches, PREG_PATTERN_ORDER) > 0) {
+            if (preg_match_all('/{tab=.+?}/', $row->text, $matches)) {
                 foreach ($matches[0] as $match) {
-                    $match = str_replace("{tab=", "", $match);
-                    $match = str_replace("}", "", $match);
-                    $row->text = str_replace("{tab=".$match."}", '<h3>'.$match.'</h3>', $row->text);
-                    $row->text = str_replace("{/tabs}", '', $row->text);
+                    $match     = str_replace('{tab=', '', $match);
+                    $match     = str_replace('}', '', $match);
+                    $row->text = str_replace('{tab=' . $match . '}', '<h3>' . $match . '</h3>', $row->text);
+                    $row->text = str_replace('{/tabs}', '', $row->text);
                 }
             }
         }
 
         // --- Sliders ---
-        $pluginTemplateFolderSystem = $pluginTemplateFolder->folder;
+        $pluginBaseFolder = $pluginTemplatePaths->get('folder');
 
-        // Fetch the template
         ob_start();
-        include($pluginTemplateFolderSystem.'/sliders.php');
-        $getSlidersTemplate = $this->plg_copyrights_start.ob_get_contents().$this->plg_copyrights_end;
+
+        include $pluginBaseFolder . '/sliders.php';
+
+        $getSlidersTemplate = $this->plg_copyrights_start . ob_get_contents() . $this->plg_copyrights_end;
+
         ob_end_clean();
 
-        // Do the replacement if needed
         if (substr_count($row->text, '{slide') > 0) {
-            $regex = "#(?:<p>)?\{slide[r]?=([^}]+)\}(?:</p>)?(.*?)(?:<p>)?\{/slide[r]?\}(?:</p>)?#s";
-            if ($document->getType() === 'html' && !$app->input->getCmd('print')) {
+            $regex = '#(?:<p>)?\{slide[r]?=([^}]+)\}(?:</p>)?(.*?)(?:<p>)?\{/slide[r]?\}(?:</p>)?#s';
+
+            if ($documentType == 'html' && !$app->input->getCmd('print')) {
                 $row->text = preg_replace(
                     $regex,
                     str_replace(
-                        array("{SLIDER_TITLE}", "{SLIDER_CONTENT}"),
-                        array("$1", "$2"),
+                        array('{SLIDER_TITLE}', '{SLIDER_CONTENT}'),
+                        array('$1', '$2'),
                         $getSlidersTemplate
                     ),
                     $row->text
                 );
+
             } else {
-                $row->text = preg_replace($regex, "<h3>$1</h3>$2", $row->text);
+                $row->text = preg_replace($regex, '<h3>$1</h3>$2', $row->text);
             }
         }
     }

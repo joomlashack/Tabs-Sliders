@@ -28,20 +28,40 @@ defined('_JEXEC') or die('Restricted access');
 
 class JWTSHelper
 {
-    // Path overrides for MVC templating
-    public function getTemplatePath($pluginName, $folder)
+    public function getTemplatePath($pluginName, $pluginTemplate)
     {
-        $app = JFactory::getApplication();
-        $p = new JObject;
+        $app         = JFactory::getApplication();
         $pluginGroup = 'content';
 
-        if (file_exists(JPATH_SITE.'/templates/'.$app->getTemplate().'/html/'.$pluginName.'/'.$folder)) {
-            $p->folder = JPATH_SITE.'/templates/'.$app->getTemplate().'/html/'.$pluginName.'/'.$folder;
-            $p->http = JURI::root(true).'/templates/'.$app->getTemplate().'/html/'.$pluginName.'/'.$folder;
+        $templateFolder = sprintf(
+            '/templates/%s/html/%s/%s',
+            $app->getTemplate(),
+            $pluginName,
+            $pluginTemplate
+        );
+        if (is_dir(JPATH_SITE . $templateFolder)) {
+            $properties = array(
+                'folder' => JPATH_SITE . $templateFolder,
+                'http'   => JUri::root() . $templateFolder
+            );
+
         } else {
-            $p->folder = JPATH_SITE.'/plugins/'.$pluginGroup.'/'.$pluginName.'/'.$pluginName.'/tmpl/'.$folder;
-            $p->http = JURI::root(true).'/plugins/'.$pluginGroup.'/'.$pluginName.'/'.$pluginName.'/tmpl/'.$folder;
+            $pluginFolder = sprintf(
+                '/plugins/%s/%s/%s/tmpl/%s',
+                $pluginGroup,
+                $pluginName,
+                $pluginName,
+                $pluginTemplate
+            );
+
+            $properties   = array(
+                'folder' => JPATH_SITE . $pluginFolder,
+                'http'   => JUri::root(true) . $pluginFolder
+            );
         }
-        return $p;
+
+        $paths = new JObject($properties);
+
+        return $paths;
     }
 }
