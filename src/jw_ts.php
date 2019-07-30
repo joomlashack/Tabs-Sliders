@@ -122,7 +122,7 @@ class plgContentJw_ts extends JPlugin
 
                     if ($source == '{/tabs}') {
                         if ($tabSetId) {
-                            $replace .= '</div></div>' . $this->commentEnd;
+                            $replace .= '</div>' . $this->commentEnd;
                             $tabId   = 0;
                             $tabsClosed++;
                         }
