@@ -3,7 +3,7 @@
     "description"      : "Tabs and Sliders [for articles]",
     "minimum-stability": "stable",
     "license"          : "GPL-2+",
-    "type"             : "joomla.plugin",
+    "type"             : "joomla-plugin",
     "extra"            : {
         "element"        : "plg_content_jw_ts",
         "element-short"  : "jw_ts",
