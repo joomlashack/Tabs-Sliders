@@ -2,7 +2,7 @@
     "name"             : "joomlashack/tabs-and-sliders-for-articles",
     "description"      : "Tabs and Sliders",
     "minimum-stability": "stable",
-    "license"          : "GPL-2+",
+    "license"          : "GPL-2.0-or-later",
     "type"             : "joomla-plugin",
     "extra"            : {
         "element"        : "plg_content_jw_ts",
@@ -11,7 +11,7 @@
         "folder"         : "content",
         "client"         : "site",
         "package-license": "free",
-        "target-platform": "3.*",
+        "target-platform": ".*",
         "infourl"        : "/changelog/tabs-and-sliders/"
     },
     "authors"          : [
