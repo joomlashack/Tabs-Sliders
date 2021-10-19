@@ -23,6 +23,9 @@
  */
 
 use Alledia\Installer\AbstractScript;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Installer\InstallerAdapter;
 
 defined('_JEXEC') or die();
 
@@ -30,5 +33,18 @@ require_once 'library/Installer/include.php';
 
 class Plgcontentjw_tsInstallerScript extends AbstractScript
 {
+    /**
+     * @inheritDoc
+     */
+    protected function customPostFlight(string $type, InstallerAdapter $parent)
+    {
+        if ($type != 'uninstall') {
+            $oldLanguageFiles = Folder::files(JPATH_ADMINISTRATOR . '/language', '\.plg_content_jw_ts\.', true, true);
+            foreach ($oldLanguageFiles as $oldLanguageFile) {
+                File::delete($oldLanguageFile);
+            }
+        }
 
+        parent::customPostFlight($type, $parent);
+    }
 }
