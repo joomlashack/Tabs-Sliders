@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.7" type="plugin" group="content" method="upgrade">
-    <name>JW_PLG_TS_XML_TITLE</name>
+<extension type="plugin" group="content" method="upgrade">
+    <name>PLG_CONTENT_JW_TS</name>
     <author>Joomlashack</author>
     <authorEmail>help@joomlashack.com</authorEmail>
     <authorUrl>https://www.joomlashack.com</authorUrl>
     <copyright>Copyright 2016-2021 Joomlashack.com. All rights reserved.</copyright>
     <license>GNU GPL; see LICENSE file</license>
-    <description>JW_PLG_TS_XML_DESC</description>
+    <description>PLG_CONTENT_JW_TS_DESCRIPTION</description>
     <version>5.0.0rc1</version>
     <creationDate>October 19 2021</creationDate>
     <variant>FREE</variant>
@@ -34,20 +34,20 @@
                 <field name="template"
                        type="template"
                        default="Default"
-                       label="JW_PLG_TS_CHOOSE_LAYOUT_TEMPLATE"
-                       description="JW_PLG_TS_CHOOSE_LAYOUT_TEMPLATE_DESC"/>
+                       label="PLG_CONTENT_JW_TS_CHOOSE_LAYOUT_TEMPLATE"
+                       description="PLG_CONTENT_JW_TS_CHOOSE_LAYOUT_TEMPLATE_DESC"/>
 
                 <field name="tabContentHeight"
                        type="text"
-                       label="JW_PLG_TS_TAB_CONTENT_HEIGHT"
-                       description="JW_PLG_TS_TAB_CONTENT_HEIGHT_DESC"/>
+                       label="PLG_CONTENT_JW_TS_TAB_CONTENT_HEIGHT"
+                       description="PLG_CONTENT_JW_TS_TAB_CONTENT_HEIGHT_DESC"/>
 
                 <field name="sliderAutoScroll"
                        type="radio"
                        default="0"
                        class="btn-group btn-group-yesno"
-                       label="JW_PLG_TS_SLIDER_AUTO_SCROLL"
-                       description="JW_PLG_TS_SLIDER_AUTO_SCROLL_DESC">
+                       label="PLG_CONTENT_JW_TS_SLIDER_AUTO_SCROLL"
+                       description="PLG_CONTENT_JW_TS_SLIDER_AUTO_SCROLL_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>

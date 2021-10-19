@@ -29,11 +29,11 @@ defined('_JEXEC') or die();
 ?>
 
 <div class="jwts_toggleControlContainer">
-    <a href="#" class="jwts_toggleControl" title="<?php echo JText::_('JW_PLG_TS_CLICK_TO_OPEN'); ?>">
+    <a href="#" class="jwts_toggleControl" title="<?php echo JText::_('PLG_CONTENT_JW_TS_CLICK_TO_OPEN'); ?>">
         <span class="jwts_togglePlus">+</span>
         <span class="jwts_toggleMinus">-</span>
         <span class="jwts_toggleControlTitle">{SLIDER_TITLE}</span>
-        <span class="jwts_toggleControlNotice"><?php echo JText::_('JW_PLG_TS_CLICK_TO_COLLAPSE'); ?></span>
+        <span class="jwts_toggleControlNotice"><?php echo JText::_('PLG_CONTENT_JW_TS_CLICK_TO_COLLAPSE'); ?></span>
         <span class="jwts_clr"></span>
     </a>
 </div>
