@@ -22,13 +22,13 @@
  * along with TabsSliders.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Alledia\Installer\AbstractScript;
+
 defined('_JEXEC') or die();
 
 require_once 'library/Installer/include.php';
 
-use Alledia\Installer;
-
-class PlgContentJW_TSInstallerScript extends Installer\AbstractScript
+class Plgcontentjw_tsInstallerScript extends AbstractScript
 {
 
 }
