@@ -22,20 +22,20 @@
  * along with TabsSliders.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die();
 
-$vars = array_merge(isset($this) ? ['this' => $this] : [], get_defined_vars());
-
-echo "<pre>/**\n";
-foreach ($vars as $name => $value) {
-    echo sprintf(" * @var %s $%s\n", is_object($value) ? get_class($value) : gettype($value), $name);
-}
-echo ' */</pre>';
-return;
+/**
+ * @var plgContentJw_ts $this
+ * @var string          $text
+ * @var string          $template
+ * @var string          $layout
+ * @var boolean         $print
+ */
 ?>
-
 <div class="jwts_toggleControlContainer">
-    <a href="#" class="jwts_toggleControl" title="<?php echo JText::_('PLG_CONTENT_JW_TS_CLICK_TO_OPEN'); ?>">
+    <a href="#" class="jwts_toggleControl" title="<?php echo Text::_('PLG_CONTENT_JW_TS_CLICK_TO_OPEN'); ?>">
         <span class="jwts_togglePlus">+</span>
         <span class="jwts_toggleMinus">-</span>
         <span class="jwts_toggleControlTitle">{SLIDER_TITLE}</span>

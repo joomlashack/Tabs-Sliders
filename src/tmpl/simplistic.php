@@ -22,14 +22,20 @@
  * along with TabsSliders.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die();
 
-// Please note that this is the override for each slider only! Any change you do in the html below will reflect on all slider panes across your entire site articles.
-
+/**
+ * @var plgContentJw_ts $this
+ * @var string          $text
+ * @var string          $template
+ * @var string          $layout
+ * @var boolean         $print
+ */
 ?>
-
 <div class="jwts_toggleControlContainer">
-    <a href="#" class="jwts_toggleControl" title="<?php echo JText::_('PLG_CONTENT_JW_TS_CLICK_TO_OPEN'); ?>">
+    <a href="#" class="jwts_toggleControl" title="<?php echo Text::_('PLG_CONTENT_JW_TS_CLICK_TO_OPEN'); ?>">
         <span class="jwts_togglePlus">+</span>
         <span class="jwts_toggleMinus">-</span>
         <span class="jwts_toggleControlTitle">{SLIDER_TITLE}</span>

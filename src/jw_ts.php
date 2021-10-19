@@ -27,6 +27,7 @@ use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
@@ -41,12 +42,12 @@ class plgContentJw_ts extends CMSPlugin
     /**
      * @var string
      */
-    protected $commentStart = "\n\n<!-- 'Tabs and Sliders' Plugin starts here -->\n";
+    protected $commentStart = "\n\n<!-- Tabs and Sliders Plugin start -->\n";
 
     /**
      * @var string
      */
-    protected $commentEnd = "\n<!-- 'Tabs and Sliders' Plugin ends here -->\n\n";
+    protected $commentEnd = "\n<!-- Tabs and Sliders Plugin end -->\n\n";
 
     /**
      * @inheritdoc
@@ -208,37 +209,30 @@ class plgContentJw_ts extends CMSPlugin
      */
     protected function processSliders(string &$text)
     {
-        $template = strtolower($this->params->get('template', 'default'));
+        if (strpos($text, '{slide') !== false) {
+            $template = strtolower($this->params->get('template', 'default'));
+            $layout   = PluginHelper::getLayoutPath('content', 'jw_ts', $template);
+            $print    = (bool)$this->app->input->getCmd('print');
 
-        $layout = \Joomla\CMS\Plugin\PluginHelper::getLayoutPath('content', 'jw_ts', $template);
+            ob_start();
+            include $layout;
+            $templateDisplay = $this->commentStart . ob_get_contents() . $this->commentEnd;
+            ob_end_clean();
 
-        $this->app->enqueueMessage(
-            '<p>' . __METHOD__ . '</p>'
-            . 'L: ' . $layout
-        );
-
-        return;
-
-        ob_start();
-        include($pluginTemplateBasePath . '/sliders.php');
-        $getSlidersTemplate = $this->commentStart . ob_get_contents() . $this->commentEnd;
-        ob_end_clean();
-
-        if (substr_count($row->text, '{slide') > 0) {
             $regex = "#(?:<p>)?\{slide[r]?=([^}]+)\}(?:</p>)?(.*?)(?:<p>)?\{/slide[r]?\}(?:</p>)?#s";
-            if ($documentType == 'html' && !$app->input->getCmd('print')) {
-                $row->text = preg_replace(
-                    $regex,
-                    str_replace(
-                        array('{SLIDER_TITLE}', '{SLIDER_CONTENT}'),
-                        array('$1', '$2'),
-                        $getSlidersTemplate
-                    ),
-                    $row->text
-                );
+            if ($print) {
+                $text = preg_replace($regex, '<h3>$1</h3>$2', $text);
 
             } else {
-                $row->text = preg_replace($regex, '<h3>$1</h3>$2', $row->text);
+                $text = preg_replace(
+                    $regex,
+                    str_replace(
+                        ['{SLIDER_TITLE}', '{SLIDER_CONTENT}'],
+                        ['$1', '$2'],
+                        $templateDisplay
+                    ),
+                    $text
+                );
             }
         }
 
