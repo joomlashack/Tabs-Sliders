@@ -52,8 +52,14 @@ class JwtsFormFieldPluginlayout extends JFormFieldList
         foreach ($coreLayouts as $coreLayout) {
             $value = basename($coreLayout, '.php');
 
-            $options[] = HTMLHelper::_('select.option', $value, ucfirst($value));
+            $options[] = HTMLHelper::_('select.option', $value, ucwords(str_replace('-', ' ', $value)));
         }
+
+        uasort($options, function ($a, $b) {
+            return $a->text == $b->text
+                ? 0
+                : ($a->text < $b->text ? -1 : 1);
+        });
 
         return array_merge(parent::getOptions(), $options);
     }
