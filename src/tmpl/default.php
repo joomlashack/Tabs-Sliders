@@ -24,8 +24,14 @@
 
 defined('_JEXEC') or die();
 
-// Please note that this is the override for each slider only! Any change you do in the html below will reflect on all slider panes across your entire site articles.
+$vars = array_merge(isset($this) ? ['this' => $this] : [], get_defined_vars());
 
+echo "<pre>/**\n";
+foreach ($vars as $name => $value) {
+    echo sprintf(" * @var %s $%s\n", is_object($value) ? get_class($value) : gettype($value), $name);
+}
+echo ' */</pre>';
+return;
 ?>
 
 <div class="jwts_toggleControlContainer">

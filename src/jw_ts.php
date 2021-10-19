@@ -22,11 +22,16 @@
  * along with TabsSliders.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Document\Document;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
 
-class plgContentJw_ts extends JPlugin
+class plgContentJw_ts extends CMSPlugin
 {
     /**
      * @var string
@@ -43,7 +48,32 @@ class plgContentJw_ts extends JPlugin
      */
     protected $commentEnd = "\n<!-- 'Tabs and Sliders' Plugin ends here -->\n\n";
 
+    /**
+     * @inheritdoc
+     */
     protected $autoloadLanguage = true;
+
+    /**
+     * @var CMSApplication
+     */
+    protected $app = null;
+
+    /**
+     * @var Document
+     */
+    protected $document = null;
+
+    /**
+     * @var bool
+     */
+    protected $supportLoaded = false;
+
+    public function __construct(&$subject, $config = [])
+    {
+        parent::__construct($subject, $config);
+
+        $this->document = Factory::getDocument();
+    }
 
     /**
      * @param string   $context
@@ -54,114 +84,140 @@ class plgContentJw_ts extends JPlugin
      * @return void
      * @throws Exception
      */
-    public function onContentPrepare($context, &$row, &$params, $page = 0)
+    public function onContentPrepare($context, $row, $params, $page = 0)
     {
-        $app      = JFactory::getApplication();
-        $document = JFactory::getDocument();
-
-        if (!preg_match("#{tab=.+?}|{slide=.+?}|{slider=.+?}#s", $row->text)) {
+        if ($this->isEnabled($row->text) !== true) {
             return;
         }
 
-        if (JPluginHelper::isEnabled('content', $this->plg_name) == false) {
-            return;
-        }
+        if ($this->document->getType() != 'html') {
+            // Variable cleanups for K2
+            // @TODO: Really?! Is this needed?
 
-        require_once __DIR__ . '/' . $this->plg_name . '/includes/helper.php';
-
-        $template         = $this->params->get('template', 'Default');
-        $tabContentHeight = $this->params->get('tabContentHeight', 0);
-        $sliderAutoScroll = $this->params->get('sliderAutoScroll', 0);
-
-        $JWTSHelper          = new JWTSHelper;
-        $documentType        = $document->getType();
-        $pluginTemplatePaths = $JWTSHelper->getTemplatePath($this->plg_name, $template);
-
-        /********* Render the output *********/
-        // Variable cleanups for K2
-        if ($documentType != 'html') {
             $this->commentStart = '';
             $this->commentEnd   = '';
-        }
 
-        if ($documentType == 'html') {
-            JHtml::_('jquery.framework');
-            JHtml::_(
-                'script',
-                sprintf('plugins/content/%s/%s/includes/js/behaviour.min.js', $this->plg_name, $this->plg_name)
+        } else {
+            $this->loadSupport();
+            $this->processTabs($row->text);
+            $this->processSliders($row->text);
+        }
+    }
+
+    /**
+     * Load support js/css
+     *
+     * @return void
+     */
+    protected function loadSupport()
+    {
+        if ($this->supportLoaded == false) {
+            HTMLHelper::_('jquery.framework');
+            HTMLHelper::_('script', 'plg_content_jw_ts/behaviour.min.js', ['relative' => true]);
+
+            $sliderAutoScroll = $this->params->get('sliderAutoScroll', 0);
+            $template         = strtolower($this->params->get('template', 'default'));
+
+            $this->document->addScriptDeclaration(
+                sprintf('let jsts_sliderAutoScroll = %s;', $sliderAutoScroll ? 'true' : 'false')
             );
 
-            $document->addScriptDeclaration('var jsts_sliderAutoScroll = ' . $sliderAutoScroll . ';');
-
-            $pluginTemplateBaseUrl = $pluginTemplatePaths->get('http');
-            JHtml::_('stylesheet', $pluginTemplateBaseUrl . '/css/template.css');
-
+            $tabContentHeight = $this->params->get('tabContentHeight');
             if ($tabContentHeight) {
-                $document->addStyleDeclaration(
+                $this->document->addStyleDeclaration(
                     sprintf(
                         '.jwts_tabberlive .jwts_tabbertab {height: %spx!important;overflow:auto!important;}',
                         $tabContentHeight
                     )
                 );
             }
+
+            HTMLHelper::_(
+                'stylesheet',
+                sprintf('plg_content_jw_ts/template/%s/template.css', $template),
+                ['relative' => true]
+            );
+
+            $this->supportLoaded = true;
         }
+    }
 
-        /********* Tabs *********/
-        if ($documentType == 'html') {
-            if (preg_match_all('/{tab=(.+?)}|{\/tabs}/', $row->text, $matches, PREG_SET_ORDER)) {
-                $tabSetId   = 0;
-                $tabId      = 0;
-                $tabsClosed = 0;
+    /**
+     * @param string $text
+     *
+     * @return void
+     */
+    protected function processTabs(string &$text)
+    {
+        if (preg_match_all('/{tab=(.+?)}|{\/tabs}/', $text, $matches, PREG_SET_ORDER)) {
+            $tabSetId   = 0;
+            $tabId      = 0;
+            $tabsClosed = 0;
 
-                foreach ($matches as $key => $match) {
-                    $source = array_shift($match);
-                    $title  = array_shift($match);
+            foreach ($matches as $match) {
+                $source = array_shift($match);
+                $title  = array_shift($match);
 
-                    $replace = $tabId ? '</div>' : '';
+                $replace = $tabId ? '</div>' : '';
 
-                    if ($source == '{/tabs}') {
-                        if ($tabSetId) {
-                            $replace .= '</div>' . $this->commentEnd;
-                            $tabId   = 0;
-                            $tabsClosed++;
-                        }
-
-                    } else {
-                        if ($tabId == 0) {
-                            $tabSetId++;
-
-                            $replace .= sprintf(
-                                $this->commentStart . '<div class="jwts_tabber" id="jwts_tab%s">',
-                                $tabSetId
-                            );
-                        }
-
-                        $replace .= sprintf(
-                            '<div class="jwts_tabbertab" title="%1$s">'
-                            . '<h2 class="jwts_heading"><a href="#" title="%1$s">%1$s</a></h2>',
-                            $title
-                        );
-
-                        $tabId++;
+                if ($source == '{/tabs}') {
+                    if ($tabSetId) {
+                        $replace .= '</div>' . $this->commentEnd;
+                        $tabId   = 0;
+                        $tabsClosed++;
                     }
 
-                    $row->text = preg_replace(
-                        '/' . preg_quote($source, '/') . '/',
-                        $replace,
-                        $row->text,
-                        1
+                } else {
+                    if ($tabId == 0) {
+                        $tabSetId++;
+
+                        $replace .= sprintf(
+                            $this->commentStart . '<div class="jwts_tabber" id="jwts_tab%s">',
+                            $tabSetId
+                        );
+                    }
+
+                    $replace .= sprintf(
+                        '<div class="jwts_tabbertab" title="%1$s">'
+                        . '<h2 class="jwts_heading"><a href="#" title="%1$s">%1$s</a></h2>',
+                        $title
                     );
+
+                    $tabId++;
                 }
 
-                if ($tabsClosed < $tabSetId) {
-                    // Close the last tab and tabset
-                    $row->text .= '</div></div>' . $this->commentEnd;
-                }
+                $text = preg_replace(
+                    '/' . preg_quote($source, '/') . '/',
+                    $replace,
+                    $text,
+                    1
+                );
+            }
+
+            if ($tabsClosed < $tabSetId) {
+                // Close the last tab and tabset
+                $text .= '</div></div>' . $this->commentEnd;
             }
         }
+    }
 
-        /********* Sliders *********/
-        $pluginTemplateBasePath = $pluginTemplatePaths->get('folder');
+    /**
+     * @param string $text
+     *
+     * @return void
+     */
+    protected function processSliders(string &$text)
+    {
+        $template = strtolower($this->params->get('template', 'default'));
+
+        $layout = \Joomla\CMS\Plugin\PluginHelper::getLayoutPath('content', 'jw_ts', $template);
+
+        $this->app->enqueueMessage(
+            '<p>' . __METHOD__ . '</p>'
+            . 'L: ' . $layout
+        );
+
+        return;
 
         ob_start();
         include($pluginTemplateBasePath . '/sliders.php');
@@ -185,5 +241,18 @@ class plgContentJw_ts extends JPlugin
                 $row->text = preg_replace($regex, '<h3>$1</h3>$2', $row->text);
             }
         }
+
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return bool
+     */
+    protected function isEnabled(string $text): bool
+    {
+        return $text
+            && $this->app->isClient('site')
+            && preg_match("#{tab=.+?}|{slide=.+?}|{slider=.+?}#s", $text);
     }
 }
