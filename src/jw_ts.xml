@@ -62,7 +62,7 @@
     </config>
 
     <updateservers>
-        <server type="extension" priority="1" name="Tabs and Sliders [for articles]"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/plg_content_jw_ts]]></server>
+        <server type="extension" priority="1" name="Tabs and Sliders Free"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/plg_content_jw_ts]]></server>
     </updateservers>
 
     <alledia>

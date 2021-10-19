@@ -1,13 +1,13 @@
 {
     "name"             : "joomlashack/tabs-and-sliders-for-articles",
-    "description"      : "Tabs and Sliders [for articles]",
+    "description"      : "Tabs and Sliders",
     "minimum-stability": "stable",
     "license"          : "GPL-2+",
     "type"             : "joomla-plugin",
     "extra"            : {
         "element"        : "plg_content_jw_ts",
         "element-short"  : "jw_ts",
-        "name"           : "Tabs and Sliders [for articles]",
+        "name"           : "Tabs and Sliders",
         "folder"         : "content",
         "client"         : "site",
         "package-license": "free",
