@@ -85,5 +85,11 @@
         </relatedExtensions>
 
         <include>ShackDefaultFiles</include>
+
+        <obsolete>
+            <preflight>
+                <folder>/plugins/content/jw_ts/form</folder>
+            </preflight>
+        </obsolete>
     </alledia>
 </extension>

@@ -2,8 +2,7 @@
 /**
  * @package   TabsSliders
  * @contact   www.joomlashack.com, help@joomlashack.com
- * @copyright 2006-2015 JoomlaWorks Ltd. All rights reserved.
- * @copyright 2016-2021 Joomlashack.com. All rights reserved
+ * @copyright 2021 Joomlashack.com. All rights reserved
  * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
  *
  * This file is part of TabsSliders.
@@ -22,28 +21,40 @@
  * along with TabsSliders.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Filesystem\Folder;
+
 defined('_JEXEC') or die();
 
-jimport('joomla.form.formfield');
+FormHelper::loadFieldClass('List');
 
-class JWElement extends JFormField
+class JwtsFormFieldPluginlayout extends JFormFieldList
 {
-    public function getInput()
+    protected function getInput()
     {
-        return $this->fetchElement($this->name, $this->value, $this->element, $this->formControl);
+        // for backward compatibility
+        $this->value = strtolower($this->value);
+
+        return parent::getInput();
     }
 
-    public function getLabel()
+    /**
+     * @inheritDoc
+     */
+    protected function getOptions()
     {
-        if (method_exists($this, 'fetchTooltip')) {
-            return $this->fetchTooltip($this->element['label'], $this->description, $this->element, $this->formControl, $this->element['name'] = '');
-        } else {
-            return parent::getLabel();
+        $path        = dirname(PluginHelper::getLayoutPath('content', 'jw_ts'));
+        $coreLayouts = Folder::files($path, '\.php$');
+
+        $options = [];
+        foreach ($coreLayouts as $coreLayout) {
+            $value = basename($coreLayout, '.php');
+
+            $options[] = HTMLHelper::_('select.option', $value, ucfirst($value));
         }
-    }
 
-    public function render($layoutId, $data = array())
-    {
-        return $this->getInput();
+        return array_merge(parent::getOptions(), $options);
     }
 }
