@@ -44,7 +44,5 @@ class Plgcontentjw_tsInstallerScript extends AbstractScript
                 File::delete($oldLanguageFile);
             }
         }
-
-        parent::customPostFlight($type, $parent);
     }
 }
