@@ -3,49 +3,44 @@
     <name>JW_PLG_TS_XML_TITLE</name>
     <author>Joomlashack</author>
     <authorEmail>help@joomlashack.com</authorEmail>
-    <authorUrl>http://www.joomlashack.com</authorUrl>
-    <copyright>Copyright (C) 2016-2019 Joomlashack.com. All rights reserved.</copyright>
-    <creationDate>October 19 2021</creationDate>
-    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>5.0.0rc1</version>
-    <variant>FREE</variant>
+    <authorUrl>https://www.joomlashack.com</authorUrl>
+    <copyright>Copyright 2016-2021 Joomlashack.com. All rights reserved.</copyright>
+    <license>GNU GPL; see LICENSE file</license>
     <description>JW_PLG_TS_XML_DESC</description>
+    <version>5.0.0rc1</version>
+    <creationDate>October 19 2021</creationDate>
+    <variant>FREE</variant>
 
     <scriptfile>script.installer.php</scriptfile>
 
     <files>
         <filename plugin="jw_ts">jw_ts.php</filename>
-        <folder>jw_ts</folder>
+
         <folder>form</folder>
+        <folder>jw_ts</folder>
+        <folder>language</folder>
         <folder>library</folder>
         <folder>views</folder>
     </files>
-
-    <languages>
-        <language tag="en-GB">language/en-GB/en-GB.plg_content_jw_ts.ini</language>
-        <language tag="en-GB">language/en-GB/en-GB.plg_content_jw_ts.sys.ini</language>
-    </languages>
 
     <media destination="plg_content_jw_ts" folder="media">
         <folder>css</folder>
         <folder>images</folder>
     </media>
 
-    <config>
+    <config addfieldpath="/plugins/content/jw_ts/form/fields">
         <fields name="params">
-            <fieldset name="basic" addfieldpath="/plugins/content/jw_ts/form/fields">
+            <fieldset name="basic">
                 <field name="template"
-                    type="template"
-                    default="Default"
-                    label="JW_PLG_TS_CHOOSE_LAYOUT_TEMPLATE"
-                    description="JW_PLG_TS_CHOOSE_LAYOUT_TEMPLATE_DESC" />
+                       type="template"
+                       default="Default"
+                       label="JW_PLG_TS_CHOOSE_LAYOUT_TEMPLATE"
+                       description="JW_PLG_TS_CHOOSE_LAYOUT_TEMPLATE_DESC"/>
 
                 <field name="tabContentHeight"
-                    type="text"
-                    default=""
-                    size="6"
-                    label="JW_PLG_TS_TAB_CONTENT_HEIGHT"
-                    description="JW_PLG_TS_TAB_CONTENT_HEIGHT_DESC" />
+                       type="text"
+                       label="JW_PLG_TS_TAB_CONTENT_HEIGHT"
+                       description="JW_PLG_TS_TAB_CONTENT_HEIGHT_DESC"/>
 
                 <field name="sliderAutoScroll"
                        type="radio"
@@ -58,24 +53,25 @@
                 </field>
 
                 <field name="customfooter"
-                    type="customfooter"
-                    media="plg_content_jw_ts"
-                    showgoproad="https://www.joomlashack.com/joomla-extensions/tabs-and-sliders/"
-                    jedurl="https://extensions.joomla.org/extension/tabs-and-sliders/" />
+                       type="customfooter"
+                       media="plg_content_jw_ts"
+                       showgoproad="https://www.joomlashack.com/joomla-extensions/tabs-and-sliders/"
+                       jedurl="https://extensions.joomla.org/extension/tabs-and-sliders/"/>
             </fieldset>
         </fields>
     </config>
 
     <updateservers>
-        <server type="extension" priority="1" name="Tabs and Sliders [for articles]"><![CDATA[http://deploy.ostraining.com/client/update/free/stable/plg_content_jw_ts]]></server>
+        <server type="extension" priority="1" name="Tabs and Sliders [for articles]"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/plg_content_jw_ts]]></server>
     </updateservers>
 
     <alledia>
         <element publish="true">jw_ts</element>
         <namespace>JW_TS</namespace>
-        <name><![CDATA[Tabs and Sliders [for articles]]]></name>
+        <name><![CDATA[Tabs and Sliders]]></name>
         <license>free</license>
-        <targetplatform>3.7</targetplatform>
+        <targetplatform>3.9</targetplatform>
+        <phpminimum>7.2.5</phpminimum>
 
         <relatedExtensions>
             <extension type="library"
@@ -85,7 +81,6 @@
                        group="system"
                        element="osmylicensesmanager"
                        ordering="last">ShackExtensionSupport</extension>
-
         </relatedExtensions>
 
         <include>ShackDefaultFiles</include>
