@@ -79,13 +79,11 @@ class plgContentJw_ts extends CMSPlugin
     /**
      * @param string   $context
      * @param object   $row
-     * @param Registry $params
-     * @param int      $page
      *
      * @return void
      * @throws Exception
      */
-    public function onContentPrepare($context, $row, $params, $page = 0)
+    public function onContentPrepare(string $context, object $row)
     {
         if ($this->isEnabled($row->text) !== true) {
             return;
@@ -100,8 +98,8 @@ class plgContentJw_ts extends CMSPlugin
 
         } else {
             $this->loadSupport();
-            $this->processTabs($row->text);
-            $this->processSliders($row->text);
+            $this->createTabs($row->text);
+            $this->createSliders($row->text);
         }
     }
 
@@ -135,7 +133,7 @@ class plgContentJw_ts extends CMSPlugin
 
             HTMLHelper::_(
                 'stylesheet',
-                sprintf('plg_content_jw_ts/template/%s/template.css', $template),
+                "plg_content_jw_ts/template/{$template}/template.min.css",
                 ['relative' => true]
             );
 
@@ -148,7 +146,7 @@ class plgContentJw_ts extends CMSPlugin
      *
      * @return void
      */
-    protected function processTabs(string &$text)
+    protected function createTabs(string &$text)
     {
         if (preg_match_all('/{tab=(.+?)}|{\/tabs}/', $text, $matches, PREG_SET_ORDER)) {
             $tabSetId   = 0;
@@ -207,7 +205,7 @@ class plgContentJw_ts extends CMSPlugin
      *
      * @return void
      */
-    protected function processSliders(string &$text)
+    protected function createSliders(string &$text)
     {
         if (strpos($text, '{slide') !== false) {
             $template = strtolower($this->params->get('template', 'default'));

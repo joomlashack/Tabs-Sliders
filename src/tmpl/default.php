@@ -26,6 +26,12 @@ use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die();
 
+/*
+ * Please note that this is the override for each slider only!
+ * Any change you do in the html below will reflect on all slider
+ * panes across your entire site articles.
+ */
+
 /**
  * @var plgContentJw_ts $this
  * @var string          $text
