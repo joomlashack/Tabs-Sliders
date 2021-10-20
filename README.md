@@ -1,7 +1,7 @@
 [![Joomlashack](https://www.joomlashack.com/images/logo_circle_small.png)](https://www.joomlashack.com)
 
 Tabs and Sliders
-============
+================
 
 ## About
 
@@ -10,7 +10,8 @@ Tabs and Sliders makes adding tabs or sliders (accordions) inside your content a
 
 ## Requirements
 
-Joomla 3.x
+* Joomla 3.9+
+* php 7.2.5+
 
 ## License
 
