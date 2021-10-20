@@ -22,27 +22,35 @@
  * along with Tabs & Sliders.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use Alledia\Installer\AbstractScript;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die();
 
-require_once 'library/Installer/include.php';
+/*
+ * Please note that this is the override for each slider only!
+ * Any change you do in the html below will reflect on all slider
+ * panes across your entire site articles.
+ */
 
-class Plgcontentjw_tsInstallerScript extends AbstractScript
-{
-    /**
-     * @inheritDoc
-     */
-    protected function customPostFlight(string $type, InstallerAdapter $parent)
-    {
-        if ($type != 'uninstall') {
-            $oldLanguageFiles = Folder::files(JPATH_ADMINISTRATOR . '/language', '\.plg_content_jw_ts\.', true, true);
-            foreach ($oldLanguageFiles as $oldLanguageFile) {
-                File::delete($oldLanguageFile);
-            }
-        }
-    }
-}
+/**
+ * @var plgContentJw_ts $this
+ * @var string          $text
+ * @var string          $template
+ * @var string          $layout
+ * @var boolean         $print
+ */
+?>
+<div class="jwts_toggleControlContainer">
+    <a href="#" class="jwts_toggleControl" title="<?php echo Text::_('PLG_CONTENT_JW_TS_CLICK_TO_OPEN'); ?>">
+        <span class="jwts_togglePlus">+</span>
+        <span class="jwts_toggleMinus">-</span>
+        <span class="jwts_toggleControlTitle">{SLIDER_TITLE}</span>
+        <span class="jwts_toggleControlNotice"><?php echo JText::_('PLG_CONTENT_JW_TS_CLICK_TO_COLLAPSE'); ?></span>
+        <span class="jwts_clr"></span>
+    </a>
+</div>
+<div class="jwts_toggleContent">
+    <div class="jwts_content">
+        {SLIDER_CONTENT}
+    </div>
+</div>
