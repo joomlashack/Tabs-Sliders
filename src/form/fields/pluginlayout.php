@@ -1,6 +1,6 @@
 <?php
 /**
- * @package   TabsSliders
+ * @package   Tabs & Sliders
  * @contact   www.joomlashack.com, help@joomlashack.com
  * @copyright 2021 Joomlashack.com. All rights reserved
  * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
