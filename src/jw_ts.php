@@ -85,7 +85,10 @@ class plgContentJw_ts extends CMSPlugin
      */
     public function onContentPrepare(string $context, object $row)
     {
-        if ($this->isEnabled($row->text) !== true) {
+        if (
+            empty($row->text) === true
+            || $this->isEnabled($row->text) !== true
+        ) {
             return;
         }
 
@@ -237,11 +240,11 @@ class plgContentJw_ts extends CMSPlugin
     }
 
     /**
-     * @param string $text
+     * @param ?string $text
      *
      * @return bool
      */
-    protected function isEnabled(string $text): bool
+    protected function isEnabled(?string $text): bool
     {
         return $text
             && $this->app->isClient('site')
