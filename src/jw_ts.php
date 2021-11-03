@@ -246,8 +246,6 @@ class plgContentJw_ts extends CMSPlugin
      */
     protected function isEnabled(?string $text): bool
     {
-        return $text
-            && $this->app->isClient('site')
-            && preg_match("#{tab=.+?}|{slide=.+?}|{slider=.+?}#s", $text);
+        return $text && preg_match("#{tab=.+?}|{slide=.+?}|{slider=.+?}#s", $text);
     }
 }
