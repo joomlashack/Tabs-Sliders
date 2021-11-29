@@ -77,13 +77,13 @@ class plgContentJw_ts extends CMSPlugin
     }
 
     /**
-     * @param string   $context
-     * @param object   $row
+     * @param ?string   $context
+     * @param ?object   $row
      *
      * @return void
      * @throws Exception
      */
-    public function onContentPrepare(string $context, object $row)
+    public function onContentPrepare(?string $context, ?object $row)
     {
         if (
             empty($row->text) === true
