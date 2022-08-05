@@ -28,7 +28,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
 
@@ -77,8 +76,8 @@ class plgContentJw_ts extends CMSPlugin
     }
 
     /**
-     * @param ?string   $context
-     * @param ?object   $row
+     * @param ?string $context
+     * @param ?object $row
      *
      * @return void
      * @throws Exception
@@ -141,7 +140,14 @@ class plgContentJw_ts extends CMSPlugin
             );
 
             $color = $this->params->get('color', '#2184cd');
-            $this->document->addStyleDeclaration("ul.jwts_tabbernav li a { background-color: $color; border-color: $color ; } ul.jwts_tabbernav li a:hover { background-color: $color; } .jwts_tabberlive .jwts_tabbertab { border-color: $color; }");
+            $this->document->addStyleDeclaration(
+                sprintf(
+                    'ul.jwts_tabbernav li a {background-color: %1$s; border-color: %1$s;}'
+                    . 'ul.jwts_tabbernav li a:hover { background-color: %1$s;}'
+                    . '.jwts_tabberlive .jwts_tabbertab { border-color: %1$s;',
+                    $color
+                )
+            );
 
             $this->supportLoaded = true;
         }
