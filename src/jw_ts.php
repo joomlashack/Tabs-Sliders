@@ -140,6 +140,9 @@ class plgContentJw_ts extends CMSPlugin
                 ['relative' => true]
             );
 
+            $color = $this->params->get('color', '#2184cd');
+            $this->document->addStyleDeclaration("ul.jwts_tabbernav li a { background-color: $color; border-color: $color ; } ul.jwts_tabbernav li a:hover { background-color: $color; } .jwts_tabberlive .jwts_tabbertab { border-color: $color; }");
+
             $this->supportLoaded = true;
         }
     }
