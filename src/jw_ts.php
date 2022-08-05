@@ -143,15 +143,7 @@ class plgContentJw_ts extends CMSPlugin
             $tabId      = 0;
             $tabsClosed = 0;
 
-            $color = $this->params->get('color', '#2184cd');
-            $this->document->addStyleDeclaration(
-                sprintf(
-                    'ul.jwts_tabbernav li a {background-color: %1$s; border-color: %1$s;}'
-                    . 'ul.jwts_tabbernav li a:hover { background-color: %1$s;}'
-                    . '.jwts_tabberlive .jwts_tabbertab { border-color: %1$s;',
-                    $color
-                )
-            );
+            $this->setTabColor();
 
             foreach ($matches as $match) {
                 $source = array_shift($match);
@@ -234,6 +226,71 @@ class plgContentJw_ts extends CMSPlugin
             }
         }
 
+    }
+
+    /**
+     * @return void
+     */
+    protected function setTabColor()
+    {
+        $template = strtolower($this->params->get('template', 'default'));
+
+        switch ($template) {
+            case 'linear-pro':
+                $styleTemplate = <<<STYLE
+ul.jwts_tabbernav li a:hover,
+ul.jwts_tabbernav li a:focus,
+ul.jwts_tabbernav li.jwts_tabberactive a {
+  color: %s
+};
+STYLE;
+                break;
+            case 'minimal-pro':
+                $styleTemplate = <<<STYLE
+ul.jwts_tabbernav li.jwts_tabberactive a {
+  border-bottom-color: %s;
+}
+STYLE;
+                break;
+            case 'plain-pro':
+                $styleTemplate = <<<STYLE
+ul.jwts_tabbernav li a,
+.jwts_tabberlive .jwts_tabbertab,
+div.jwts_toggleControlContainer a.jwts_toggleControl {
+  border-color: %s;
+}
+STYLE;
+                break;
+            case 'setoff-pro':
+                $styleTemplate = <<<STYLE
+ul.jwts_tabbernav li a,
+ul.jwts_tabbernav li a:hover {
+  background: %1\$s;
+}
+ul.jwts_tabbernav li a,
+.jwts_tabberlive .jwts_tabbertab {
+  border-color: %1\$s;
+}
+STYLE;
+                break;
+            case 'source-pro':
+                $styleTemplate = <<<STYLE
+ul.jwts_tabbernav li.jwts_tabberactive a,
+ul.jwts_tabbernav li.jwts_tabberactive a:hover {
+    background: %1\$s;
+}
+ul.jwts_tabbernav li.jwts_tabberactive a:before {
+    border-top-color: %1\$s;
+}
+STYLE;
+                break;
+        }
+
+        if (empty($styleTemplate) == false) {
+            $color = $this->params->get('color', '#2184cd');
+
+            $this->document->addStyleDeclaration(sprintf($styleTemplate, $color));
+        }
     }
 
     /**
