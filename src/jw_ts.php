@@ -139,16 +139,6 @@ class plgContentJw_ts extends CMSPlugin
                 ['relative' => true]
             );
 
-            $color = $this->params->get('color', '#2184cd');
-            $this->document->addStyleDeclaration(
-                sprintf(
-                    'ul.jwts_tabbernav li a {background-color: %1$s; border-color: %1$s;}'
-                    . 'ul.jwts_tabbernav li a:hover { background-color: %1$s;}'
-                    . '.jwts_tabberlive .jwts_tabbertab { border-color: %1$s;',
-                    $color
-                )
-            );
-
             $this->supportLoaded = true;
         }
     }
@@ -164,6 +154,16 @@ class plgContentJw_ts extends CMSPlugin
             $tabSetId   = 0;
             $tabId      = 0;
             $tabsClosed = 0;
+
+            $color = $this->params->get('color', '#2184cd');
+            $this->document->addStyleDeclaration(
+                sprintf(
+                    'ul.jwts_tabbernav li a {background-color: %1$s; border-color: %1$s;}'
+                    . 'ul.jwts_tabbernav li a:hover { background-color: %1$s;}'
+                    . '.jwts_tabberlive .jwts_tabbertab { border-color: %1$s;',
+                    $color
+                )
+            );
 
             foreach ($matches as $match) {
                 $source = array_shift($match);
