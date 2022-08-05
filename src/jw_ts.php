@@ -91,14 +91,7 @@ class plgContentJw_ts extends CMSPlugin
             return;
         }
 
-        if ($this->document->getType() != 'html') {
-            // Variable cleanups for K2
-            // @TODO: Really?! Is this needed?
-
-            $this->commentStart = '';
-            $this->commentEnd   = '';
-
-        } else {
+        if ($this->document->getType() == 'html') {
             $this->loadSupport();
             $this->createTabs($row->text);
             $this->createSliders($row->text);
