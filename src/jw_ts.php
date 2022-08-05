@@ -22,9 +22,9 @@
  * along with Tabs & Sliders.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Alledia\Framework\Factory;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Document\Document;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -33,11 +33,6 @@ defined('_JEXEC') or die();
 
 class plgContentJw_ts extends CMSPlugin
 {
-    /**
-     * @var string
-     */
-    protected $plg_name = 'jw_ts';
-
     /**
      * @var string
      */
