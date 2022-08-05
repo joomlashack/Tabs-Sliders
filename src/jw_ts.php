@@ -72,7 +72,7 @@ class plgContentJw_ts extends CMSPlugin
     {
         parent::__construct($subject, $config);
 
-        $this->document = Factory::getDocument();
+        $this->document = Factory::getApplication()->getDocument();
     }
 
     /**
