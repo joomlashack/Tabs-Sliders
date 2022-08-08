@@ -8,8 +8,6 @@
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
-/* Please note: if you wish to target IE6 to IE8 specifically, prepend any selector with "body.jwts_IsIEX" replacing X with either 6, 7 or 8 */
-
 /* Generic
 ------------------------------------------ */
 a:active,
@@ -43,7 +41,6 @@ ul.jwts_tabbernav {
   margin: 0 0 0 8px !important;
   padding: 0 !important;
   list-style: none !important;
-  list-style-image: none !important;
   background: none !important;
   line-height: normal !important;
   height: auto !important;
@@ -55,7 +52,6 @@ ul.jwts_tabbernav li {
   padding: 0 !important;
   line-height: normal !important;
   list-style: none !important;
-  list-style-image: none !important;
   background: none !important;
   display: inline !important;
 }
@@ -116,19 +112,6 @@ ul.jwts_tabbernav li.jwts_tabberinactive {
 .jwts_tabberlive .jwts_tabbertabhide {
   display: none;
 }
-
-/* IE7 specific */
-body.jwts_IsIE7 ul.jwts_tabbernav {
-  position: relative;
-  z-index: 9;
-}
-
-body.jwts_IsIE7 .jwts_tabberlive .jwts_tabbertab {
-  position: relative;
-  z-index: 8;
-  margin: 2px 0 0 !important;
-}
-
 
 /* Sliders (accordion)
 ------------------------------------------ */
@@ -194,9 +177,4 @@ div.jwts_content {
   border: 1px solid #ccc;
   border-radius: 0 0 2px 2px;
   border-top: 0;
-}
-
-/* IE7 specific */
-body.jwts_IsIE7 div.jwts_toggleControlContainer a.jwts_toggleOn span.jwts_toggleControlNotice {
-  display: none;
 }

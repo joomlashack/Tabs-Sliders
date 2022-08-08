@@ -22,23 +22,17 @@
  * along with Tabs & Sliders.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Alledia\Framework\Factory;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Document\Document;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
 
 class plgContentJw_ts extends CMSPlugin
 {
-    /**
-     * @var string
-     */
-    protected $plg_name = 'jw_ts';
-
     /**
      * @var string
      */
@@ -73,12 +67,12 @@ class plgContentJw_ts extends CMSPlugin
     {
         parent::__construct($subject, $config);
 
-        $this->document = Factory::getDocument();
+        $this->document = Factory::getApplication()->getDocument();
     }
 
     /**
-     * @param ?string   $context
-     * @param ?object   $row
+     * @param ?string $context
+     * @param ?object $row
      *
      * @return void
      * @throws Exception
@@ -92,14 +86,7 @@ class plgContentJw_ts extends CMSPlugin
             return;
         }
 
-        if ($this->document->getType() != 'html') {
-            // Variable cleanups for K2
-            // @TODO: Really?! Is this needed?
-
-            $this->commentStart = '';
-            $this->commentEnd   = '';
-
-        } else {
+        if ($this->document->getType() == 'html') {
             $this->loadSupport();
             $this->createTabs($row->text);
             $this->createSliders($row->text);
@@ -155,6 +142,8 @@ class plgContentJw_ts extends CMSPlugin
             $tabSetId   = 0;
             $tabId      = 0;
             $tabsClosed = 0;
+
+            $this->setTabColor();
 
             foreach ($matches as $match) {
                 $source = array_shift($match);
@@ -237,6 +226,71 @@ class plgContentJw_ts extends CMSPlugin
             }
         }
 
+    }
+
+    /**
+     * @return void
+     */
+    protected function setTabColor()
+    {
+        $template = strtolower($this->params->get('template', 'default'));
+
+        switch ($template) {
+            case 'linear-pro':
+                $styleTemplate = <<<STYLE
+ul.jwts_tabbernav li a:hover,
+ul.jwts_tabbernav li a:focus,
+ul.jwts_tabbernav li.jwts_tabberactive a {
+  color: %s
+};
+STYLE;
+                break;
+            case 'minimal-pro':
+                $styleTemplate = <<<STYLE
+ul.jwts_tabbernav li.jwts_tabberactive a {
+  border-bottom-color: %s;
+}
+STYLE;
+                break;
+            case 'plain-pro':
+                $styleTemplate = <<<STYLE
+ul.jwts_tabbernav li a,
+.jwts_tabberlive .jwts_tabbertab,
+div.jwts_toggleControlContainer a.jwts_toggleControl {
+  border-color: %s;
+}
+STYLE;
+                break;
+            case 'setoff-pro':
+                $styleTemplate = <<<STYLE
+ul.jwts_tabbernav li a,
+ul.jwts_tabbernav li a:hover {
+  background: %1\$s;
+}
+ul.jwts_tabbernav li a,
+.jwts_tabberlive .jwts_tabbertab {
+  border-color: %1\$s;
+}
+STYLE;
+                break;
+            case 'source-pro':
+                $styleTemplate = <<<STYLE
+ul.jwts_tabbernav li.jwts_tabberactive a,
+ul.jwts_tabbernav li.jwts_tabberactive a:hover {
+    background: %1\$s;
+}
+ul.jwts_tabbernav li.jwts_tabberactive a:before {
+    border-top-color: %1\$s;
+}
+STYLE;
+                break;
+        }
+
+        if (empty($styleTemplate) == false) {
+            $color = $this->params->get('color', '#2184cd');
+
+            $this->document->addStyleDeclaration(sprintf($styleTemplate, $color));
+        }
     }
 
     /**
