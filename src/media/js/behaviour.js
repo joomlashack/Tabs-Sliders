@@ -46,8 +46,8 @@
     };
 
     let setCookie = function(name, value, expires, path, domain, secure) {
-        document.cookie = name + '=' + escape(value)
-            + ((expires) ? '; expires=' + expires.toGMTString() : '')
+        document.cookie = name + '=' + encodeURIComponent(value)
+            + ((expires) ? '; expires=' + expires.toUTCString() : '')
             + ((path) ? '; path=' + path : '')
             + ((domain) ? '; domain=' + domain : '')
             + ((secure) ? '; secure' : '');
@@ -70,7 +70,7 @@
             end = dc.length;
         }
 
-        return unescape(dc.substring(begin + prefix.length, end));
+        return decodeURIComponent(dc.substring(begin + prefix.length, end));
     }
 
     let deleteCookie = function(name, path, domain) {
@@ -85,6 +85,8 @@
     let tabberObj = function(argsObj) {
         let arg;
         this.div                    = null;
+        this.onLoad                 = null;
+        this.onTabDisplay           = null;
         this.classMain              = 'jwts_tabber';
         this.classMainLive          = 'jwts_tabberlive';
         this.classTab               = 'jwts_tabbertab';
@@ -105,7 +107,7 @@
         this.REclassTab        = new RegExp('\\b' + this.classTab + '\\b', 'gi');
         this.REclassTabDefault = new RegExp('\\b' + this.classTabDefault + '\\b', 'gi');
         this.REclassTabHide    = new RegExp('\\b' + this.classTabHide + '\\b', 'gi');
-        this.tabs              = new Array();
+        this.tabs              = [];
         if (this.div) {
             this.init(this.div);
             this.div = null;
@@ -113,7 +115,7 @@
     }
 
     tabberObj.prototype.init = function(e) {
-        var childNodes, i, i2, t, defaultTab = 0,
+        let childNodes, i, i2, t, defaultTab = 0,
             DOM_ul, DOM_li, DOM_a, aId, headingElement;
         if (!document.getElementsByTagName) {
             return false;
@@ -125,8 +127,10 @@
         childNodes       = e.childNodes;
         for (i = 0; i < childNodes.length; i++) {
             if (childNodes[i].className && childNodes[i].className.match(this.REclassTab)) {
-                t                           = new Object();
-                t.div                       = childNodes[i];
+                t = {
+                    div: childNodes[i]
+                };
+
                 this.tabs[this.tabs.length] = t;
                 if (childNodes[i].className.match(this.REclassTabDefault)) {
                     defaultTab = this.tabs.length - 1;
@@ -170,7 +174,7 @@
                 aId      = this.linkIdFormat;
                 aId      = aId.replace(/<tabberid>/gi, this.id);
                 aId      = aId.replace(/<tabnumberzero>/gi, i);
-                aId      = aId.replace(/<tabnumberone>/gi, i + 1);
+                aId      = aId.replace(/<tabnumberone>/gi, (i + 1).toString());
                 aId      = aId.replace(/<tabtitle>/gi, t.headingText.replace(/[^a-zA-Z0-9\-]/gi, ''));
                 DOM_a.id = aId;
             }
