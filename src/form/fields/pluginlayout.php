@@ -32,6 +32,9 @@ FormHelper::loadFieldClass('List');
 
 class JwtsFormFieldPluginlayout extends JFormFieldList
 {
+    /**
+     * @inheritDoc
+     */
     protected function getInput()
     {
         // for backward compatibility
