@@ -32,6 +32,7 @@ FormHelper::loadFieldClass('List');
 
 class JwtsFormFieldPluginlayout extends JFormFieldList
 {
+    protected $layout = 'joomla.form.field.list-fancy-select';
     /**
      * @inheritDoc
      */
