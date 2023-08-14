@@ -24,7 +24,6 @@
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Document\Document;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -68,13 +67,6 @@ class plgContentJw_ts extends CMSPlugin
      * @var bool
      */
     protected $supportLoaded = false;
-
-    public function __construct(&$subject, $config = [])
-    {
-        parent::__construct($subject, $config);
-
-        $this->document = Factory::getApplication()->getDocument();
-    }
 
     /**
      * @param ?string $context
@@ -305,6 +297,10 @@ STYLE;
      */
     protected function isEnabled(?string $text): bool
     {
-        return $text && preg_match("#{tab=.+?}|{slide=.+?}|{slider=.+?}#s", $text);
+        if ($this->document === null) {
+            $this->document = $this->app->getDocument();
+        }
+
+        return $this->document && $text && preg_match('#{tab=.+?}|{slide=.+?}|{slider=.+?}#s', $text);
     }
 }
