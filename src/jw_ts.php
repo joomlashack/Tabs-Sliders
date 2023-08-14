@@ -29,7 +29,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 
 class plgContentJw_ts extends CMSPlugin
 {
@@ -49,6 +53,8 @@ class plgContentJw_ts extends CMSPlugin
     protected $autoloadLanguage = true;
 
     /**
+     * Joomla doesn't explicitly declare this
+     *
      * @var CMSApplication
      */
     protected $app = null;
@@ -209,7 +215,7 @@ class plgContentJw_ts extends CMSPlugin
             $templateDisplay = $this->commentStart . ob_get_contents() . $this->commentEnd;
             ob_end_clean();
 
-            $regex = "#(?:<p>)?\{slide[r]?=([^}]+)\}(?:</p>)?(.*?)(?:<p>)?\{/slide[r]?\}(?:</p>)?#s";
+            $regex = '#(?:<p>)?\{slide[r]?=([^}]+)\}(?:</p>)?(.*?)(?:<p>)?\{/slide[r]?\}(?:</p>)?#s';
             if ($print) {
                 $text = preg_replace($regex, '<h3>$1</h3>$2', $text);
 
@@ -225,7 +231,6 @@ class plgContentJw_ts extends CMSPlugin
                 );
             }
         }
-
     }
 
     /**
