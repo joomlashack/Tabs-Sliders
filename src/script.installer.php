@@ -27,16 +27,20 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\InstallerAdapter;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 require_once 'library/Installer/include.php';
+// phpcs:enable PSR1.Files.SideEffects
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 
 class Plgcontentjw_tsInstallerScript extends AbstractScript
 {
     /**
      * @inheritDoc
      */
-    protected function customPostFlight(string $type, InstallerAdapter $parent)
+    protected function customPostFlight(string $type, InstallerAdapter $parent): void
     {
         if ($type != 'uninstall') {
             $oldLanguageFiles = Folder::files(JPATH_ADMINISTRATOR . '/language', '\.plg_content_jw_ts\.', true, true);
