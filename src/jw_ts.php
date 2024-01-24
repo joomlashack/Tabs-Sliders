@@ -239,7 +239,7 @@ ul.jwts_tabbernav li a:hover,
 ul.jwts_tabbernav li a:focus,
 ul.jwts_tabbernav li.jwts_tabberactive a {
   color: %s
-};
+}
 STYLE;
                 break;
             case 'minimal-pro':
