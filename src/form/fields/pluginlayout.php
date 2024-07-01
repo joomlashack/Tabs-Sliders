@@ -21,18 +21,26 @@
  * along with TabsSliders.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Filesystem\Folder;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
-FormHelper::loadFieldClass('List');
+if (class_exists(ListField::class) == false) {
+    FormHelper::loadFieldClass('List');
+    class_alias(JFormFieldList::class, ListField::class);
+}
 
-class JwtsFormFieldPluginlayout extends JFormFieldList
+class JwtsFormFieldPluginlayout extends ListField
 {
     protected $layout = 'joomla.form.field.list-fancy-select';
+
     /**
      * @inheritDoc
      */

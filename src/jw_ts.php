@@ -298,7 +298,7 @@ STYLE;
     protected function isEnabled(?string $text): bool
     {
         if ($this->document === null) {
-            $this->document = $this->app->getDocument();
+            $this->document = is_callable([$this->app, 'getDocument']) ? $this->app->getDocument() : false;
         }
 
         return $this->document && $text && preg_match('#{tab=.+?}|{slide=.+?}|{slider=.+?}#s', $text);
