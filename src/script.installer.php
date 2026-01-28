@@ -24,8 +24,8 @@
  */
 
 use Alledia\Installer\AbstractScript;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Installer\InstallerAdapter;
 
 // phpcs:disable PSR1.Files.SideEffects
