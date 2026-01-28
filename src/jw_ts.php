@@ -40,12 +40,12 @@ class plgContentJw_ts extends CMSPlugin
     /**
      * @var string
      */
-    protected $commentStart = "\n\n<!-- Tabs and Sliders Plugin start -->\n";
+    protected string $commentStart = "\n\n<!-- Tabs and Sliders Plugin start -->\n";
 
     /**
      * @var string
      */
-    protected $commentEnd = "\n<!-- Tabs and Sliders Plugin end -->\n\n";
+    protected string $commentEnd = "\n<!-- Tabs and Sliders Plugin end -->\n\n";
 
     /**
      * @inheritdoc
@@ -60,14 +60,14 @@ class plgContentJw_ts extends CMSPlugin
     protected $app = null;
 
     /**
-     * @var Document
+     * @var Document|false|null
      */
     protected $document = null;
 
     /**
      * @var bool
      */
-    protected $supportLoaded = false;
+    protected bool $supportLoaded = false;
 
     /**
      * @param ?string $context
@@ -76,16 +76,12 @@ class plgContentJw_ts extends CMSPlugin
      * @return void
      * @throws Exception
      */
-    public function onContentPrepare(?string $context, ?object $row)
+    public function onContentPrepare(?string $context, ?object $row): void
     {
         if (
-            empty($row->text) === true
-            || $this->isEnabled($row->text) !== true
+            $this->isEnabled($row->text ?? null)
+            && $this->document->getType() == 'html'
         ) {
-            return;
-        }
-
-        if ($this->document->getType() == 'html') {
             $this->loadSupport();
             $this->createTabs($row->text);
             $this->createSliders($row->text);
@@ -97,7 +93,7 @@ class plgContentJw_ts extends CMSPlugin
      *
      * @return void
      */
-    protected function loadSupport()
+    protected function loadSupport(): void
     {
         if ($this->supportLoaded == false) {
             HTMLHelper::_('jquery.framework');
@@ -135,7 +131,7 @@ class plgContentJw_ts extends CMSPlugin
      *
      * @return void
      */
-    protected function createTabs(string &$text)
+    protected function createTabs(string &$text): void
     {
         if (preg_match_all('/{tab=(.+?)}|{\/tabs}/', $text, $matches, PREG_SET_ORDER)) {
             $tabSetId   = 0;
@@ -196,7 +192,7 @@ class plgContentJw_ts extends CMSPlugin
      *
      * @return void
      */
-    protected function createSliders(string &$text)
+    protected function createSliders(string &$text): void
     {
         if (strpos($text, '{slide') !== false) {
             $template = strtolower($this->params->get('template', 'default'));
@@ -229,7 +225,7 @@ class plgContentJw_ts extends CMSPlugin
     /**
      * @return void
      */
-    protected function setTabColor()
+    protected function setTabColor(): void
     {
         $template = strtolower($this->params->get('template', 'default'));
 
